@@ -49,11 +49,11 @@ function startPlaying() {
   vAyaToPad=vAyaTo.padStart(3,'0');
   if (vAyaFrm!="") { preloadAudio();}else { playFullSurah();}
 } 
-function preloadAudio(){ vAudPlayer.loop=false; vUrl1="./"; reciter="";vUrl2="_128kbps/"; gAudSrc="";
+function preloadAudio(){ vAudPlayer.loop=false; vUrl1="./"; reciter="";vUrl2=""; gAudSrc="";
   vTotAyas=0; gCurAya=0; gCurAyaPad="";
   btnToggle();
   vTotAyas=(vAyaTo-vAyaFrm)+1;
-  reciter="Alafasy";
+  reciter="";
   var vCurayaPad;
   if (vAyaFrm==vAyaTo) { vAudPlayer.loop=true; }else { vAudPlayer.loop=false;  }
   for (var i = vAyaFrm; i <= vTotAyas; i++) { 
