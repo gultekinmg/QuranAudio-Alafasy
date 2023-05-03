@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Quran Audio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />  
+		<style>
+		.container{  position: absolute;  width: 444px;  background: aliceblue; }
+		ul {list-style: none;}
+		
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<header id="header"> <h1>Quran Audio</h1> <p>وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ</p> </header> 
+			<ul>
+				<li><div class="grid grid-2"><audio  id="AudPlayer" controls preload="auto"></audio></div></li>
+				<li><div class="grid grid-2"><input id="surah" type="text" placeholder="Enter Surah#" required onkeyup="chkVals()"></div></li>
+				<li><div class="grid grid-2"><input id="ayaFrm" type="text" placeholder="Ayah (From)" required onkeyup="chkVals()"></div></li>
+				<li><div class="grid grid-2"><input id="ayaTo" type="text" placeholder="Ayah (To)" onfocus="this.value = this.value;"></div></li>
+				<li><div id="playBtnDiv" class="grid grid-2"><input id="playBtn" type="submit" value="Play" onclick="startPlaying()" disabled/></div></li>
+				<li><div id="stpBtnDiv" class="grid grid-2"><input id="stopBtn" type="submit" value="Stop" onclick="stopAud()" display="none"/></div></li>
+			</ul>
+		</div>
+		<script>
+var vAudPlayer = document.getElementById('AudPlayer');
+var vUrl1=vUrl2=reciter=gAudSrc=vSurah=vAyaFrm=vAyaTo=gCurAyaPad=vSurPad="";
+var vTotAyas=gCurAya=0;
+btnToggle();
+function stopAud() {vAudPlayer.pause();vAudPlayer.currentTime = 0;btnToggle();}
+function playSound() {  if (gCurAya==0) {  gCurAya=vAyaFrm; }
+  gCurAyaPad=(gCurAya+"").padStart(3,'0');
+  gAudSrc=vUrl1+reciter+vUrl2+vSurPad+"/"+vSurPad+gCurAyaPad+".mp3";
+  vAudPlayer.src = gAudSrc;console.log( gAudSrc);
+  vAudPlayer.play();
+}
+function playFullSurah() {/* playFullSurah BEG  */
+vUrl1="https://media.blubrry.com/muslim_central_quran/podcasts.qurancentral.com/mishary-rashid-alafasy/mishary-rashid-alafasy-"; vUrl2="-muslimcentral.com.mp3";
+gAudSrc=vUrl1+vSurPad+vUrl2;
+vAudPlayer.src = gAudSrc;
+playSound();
+} 
+function startPlaying() {
+  vSurah =document.getElementById("surah").value;
+  vAyaFrm =document.getElementById("ayaFrm").value;
+  vAyaTo =document.getElementById("ayaTo").value;
+  vSurPad=vSurah.padStart(3,'0');
+  vAyaFrmPad=vAyaFrm.padStart(3,'0');
+  vAyaToPad=vAyaTo.padStart(3,'0');
+  if (vAyaFrm!="") { preloadAudio();}else { playFullSurah();}
+} 
+function preloadAudio(){ vAudPlayer.loop=false; vUrl1="./"; reciter="";vUrl2="_128kbps/"; gAudSrc="";
+  vTotAyas=0; gCurAya=0; gCurAyaPad="";
+  btnToggle();
+  vTotAyas=(vAyaTo-vAyaFrm)+1;
+  reciter="Alafasy";
+  var vCurayaPad;
+  if (vAyaFrm==vAyaTo) { vAudPlayer.loop=true; }else { vAudPlayer.loop=false;  }
+  for (var i = vAyaFrm; i <= vTotAyas; i++) { 
+	vCurayaPad=""+(i+"").padStart(3,'0');
+	gAudSrc=vUrl1+reciter+vUrl2+vSurPad+"/"+vSurPad+gCurAyaPad+".mp3";
+    vAudPlayer.src = gAudSrc; console.log( "pre",gAudSrc);}
+  playSound();
+}
+/* addEventListener BEG */ 
+vAudPlayer.addEventListener("ended", function () { 
+   if ( vAyaTo>gCurAya) {gCurAya++;}else if (vAyaTo==vAyaFrm) { }else if (gCurAya==vAyaTo) { gCurAya=vAyaFrm; }
+  playSound();
+});
+function chkVals() { const btns = document.querySelectorAll("button"); var hasFilled=false;/* chkVals BEG */
+  vSurah = document.getElementById("surah").value; 
+  vAyaFrm = document.getElementById("ayaFrm").value; vAyaTo = document.getElementById("ayaTo").value;
+  if (vSurah == "") {  hasFilled = false ;} else { hasFilled = true ;  }
+    hasFilled ? (document.getElementById("playBtn").disabled = false) : (document.getElementById("playBtn").disabled = true); 
+      document.getElementById("ayaTo").value=vAyaFrm; 
+}
+/* chkAyaTo BEG  */
+function chkAyaTo(){ if (vAyaTo == ""){ document.getElementById("ayaTo").value=document.getElementById("ayaFrm").value;  } }
+function fOnfocus(xthis) {document.getElementById(xthis).value="";}/* fOnfocus BEG  */
+function btnToggle() { var x = document.getElementById("stpBtnDiv"); var y = document.getElementById("playBtnDiv");
+  if (x.style.display === "none") { x.style.display = "block"; y.style.display = "none"; } else { x.style.display = "none"; y.style.display = "block"; }
+}
+
+			</script>
+	</body>
+</html>
