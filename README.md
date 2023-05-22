@@ -3,3 +3,5 @@ VerseByVerse Audio to use from internet
 check console link
 
 demo: https://gultekinmg.github.io/QuranAudio-Alafasy/
+
+remote access examplae: https://gultekinmg.github.io/QuranAudio-Alafasy/001/001001.mp3
